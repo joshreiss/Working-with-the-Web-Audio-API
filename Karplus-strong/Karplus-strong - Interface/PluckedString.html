@@ -1,0 +1,46 @@
+<body>
+  <html>
+    <p>Decay</p>
+    <input type="range" min="0.8" max="0.999" value="0.9" step="any" id="Decay">
+    <span id="Decay label"></span>
+    <p>Delay (ms)</p>
+    <input type="range" min="0" max="20" value="1" step="any" id="Delay">
+    <span id="Delay label"></span>
+    <p>Width (ms)</p>
+    <input type="range" min="0" max="20" value="3" step="any" id="Width">
+    <span id="Width label"></span>
+    <p>Cut-off Frequency (Hz)</p>
+    <input type="range" min="0" max="10000" value="10000" step="any" id="Freq">
+    <span id="Freq label"></span>
+    <p>Source</p>
+    <select id="Source">
+      <option value="noise">Noise</option>
+      <option value="sine">Sine</option>
+      <option value="sawtooth">Sawtooth</option>
+      <option value="triangle">Triangle</option>
+      <option value="square">Square</option>
+    </select>
+    <p></p>
+    <script src="recorder.js"></script>
+    <input type="button" value="play" id="PlayButton">
+    <input type="button" value="record" id="StartButton">
+    <input type="button" value="stop" id="StopButton">
+    <div id="recordings"></div>
+    <script>
+    //SET UP INTERFACE
+      var StartStop = document.getElementById("StartButton");
+      var Decay = document.getElementById("Decay");
+      var DecayLabel = document.getElementById("Decay label");
+      var Delay = document.getElementById("Delay");
+      var DelayLabel = document.getElementById("Delay label");
+      var Width = document.getElementById("Width");
+      var WidthLabel = document.getElementById("Width label");
+      var Freq = document.getElementById("Freq");
+      var FreqLabel = document.getElementById("Freq label");
+      var Source = document.getElementById("Source");
+      var Play = document.getElementById("PlayButton");
+      var Start = document.getElementById("StartButton");
+      var Stop = document.getElementById("StopButton");
+    </script>
+    <script src="PluckedString.js"></script>
+</body>

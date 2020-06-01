@@ -1,0 +1,39 @@
+<html>
+  <style>#canvas { background-color: black;}</style>
+  <canvas id="canvas" width="512" height="256" ></canvas>
+  <button onclick="audioContext.resume()">Start</button>
+    <input type="radio" name="state" id="Waveform" checked="">
+    <label for="Waveform" onclick="">Waveform</label>
+    <input type="radio" name="state" id="Spectrum">
+    <label for="Spectrum" onclick="">Spectrum</label>
+    <p>Frequency</p>
+    <input type="range" max="4000" value="440" id="Frequency">
+  <script>
+    // see https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
+    let ctx= canvas.getContext('2d');
+    let audioContext= new AudioContext();
+    let sourceNode= audioContext.createOscillator();
+    let analyserNode= audioContext.createAnalyser();
+    let javascriptNode= audioContext.createScriptProcessor(1024,1,1);// 1024 samples to collect before analyzing data
+    let data= new Uint8Array(analyserNode.frequencyBinCount);// Create array for data
+    sourceNode.connect(audioContext.destination);
+    sourceNode.connect(analyserNode);
+    analyserNode.connect(javascriptNode);
+    javascriptNode.connect(audioContext.destination);
+    Frequency.oninput = function() { sourceNode.frequency.value = this.value;}
+    sourceNode.start();
+    javascriptNode.onaudioprocess = function () {
+      if (Spectrum.checked == true)  analyserNode.getByteFrequencyData(data);
+      else analyserNode.getByteTimeDomainData(data);  // get data for this sample
+      requestAnimationFrame(drawTimeDomain);// draw the display
+    }
+    function drawTimeDomain() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < data.length; i++) {
+        ctx.fillStyle = '#ffffff';
+        if (Spectrum.checked == true) ctx.fillRect(i,canvas.height-1-canvas.height*data[i]/256,1,canvas.height*data[i]/256);
+        else ctx.fillRect(i,canvas.height- canvas.height*data[i]/256-1,1,1);
+      }
+    }
+  </script>
+</html>

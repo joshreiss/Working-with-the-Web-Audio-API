@@ -1,0 +1,17 @@
+<html>
+  <button onclick="StartStop()">Start/Stop</button>
+  <p>Frequency</p>
+  <input type="range" min="0" max="1000" value="440" id="Freq">
+  <span id="FreqLabel"></span>
+  <p>Gain</p>
+  <input type="range" min="0" max="1" value="0.1" step="any" id="Volume">
+  <span id="VolumeLabel"></span>
+  <p>Type</p>
+  <select id="Type">
+    <option value="sine">Sine</option>
+    <option value="square">Square</option>
+    <option value="sawtooth">Sawtooth</option>
+    <option value="triangle">Triangle</option>
+  </select>
+  <script type="text/javascript" src="tone.js"></script>
+</html>

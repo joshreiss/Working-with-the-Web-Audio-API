@@ -1,0 +1,12 @@
+<html>
+  <audio controls><source src="viper.mp3"></audio>
+  <script>
+    const myAudio = document.querySelector('audio');
+    myAudio.addEventListener('play', () => {
+      context = new AudioContext();
+      let source = context.createMediaElementSource(myAudio);
+      let gainNode = new GainNode(context,{gain:0.5});
+      source.connect(gainNode).connect(context.destination);
+    });
+  </script>
+</html>

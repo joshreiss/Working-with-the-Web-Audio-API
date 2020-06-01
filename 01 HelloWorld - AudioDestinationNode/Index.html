@@ -1,0 +1,12 @@
+<html>
+  <button onclick="context.resume()">Start</button>
+  <script>
+    var context= new AudioContext();
+    var Tone= context.createOscillator();
+    var Amplitude= context.createGain();
+    Amplitude.gain.value=0.2;
+    Tone.start();
+    Tone.connect(Amplitude);
+    Amplitude.connect(context.destination);
+  </script>
+</html>

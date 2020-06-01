@@ -1,0 +1,15 @@
+<html>
+  <button id='start'>Make noise</button>
+  <script>
+    let i,channel,context= new AudioContext();
+    start.onclick = function() {
+      context.resume();
+      let source = context.createBufferSource();// AudioBufferSourceNode to play an AudioBuffer
+      let nFrames = 3*context.sampleRate;
+      source.buffer = context.createBuffer(2,nFrames,context.sampleRate);// Create stereo buffer
+      for (channel=0;channel<2;channel++) for (i=0;i<nFrames;i++) source.buffer.getChannelData(channel)[i] = 2*Math.random()-1;
+      source.connect(context.destination);
+      source.start();
+    }
+  </script>
+</html>

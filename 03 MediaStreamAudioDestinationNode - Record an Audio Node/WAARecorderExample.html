@@ -1,0 +1,23 @@
+<html>
+  <button onclick="Start()">Start</button>
+  <button onclick="Stop()">Stop</button>
+  <audio controls id='audio'></audio>
+  <script>
+     var chunks = [];
+     var context = new AudioContext();
+     var Tone = context.createOscillator();
+     var dest = context.createMediaStreamDestination();
+     var mediaRecorder = new MediaRecorder(dest.stream);
+     Tone.connect(dest);
+     function Start() {
+       mediaRecorder.start();
+       Tone.start(0);
+     }
+     function Stop() {
+       mediaRecorder.stop();
+       Tone.stop(0);
+     }
+     mediaRecorder.ondataavailable = function(evt) {chunks.push(evt.data) } // push each chunk (blobs) in an array
+     mediaRecorder.onstop = function() {audio.src = URL.createObjectURL(new Blob(chunks,{'type':'audio/ogg'}))};
+  </script>
+</html>
