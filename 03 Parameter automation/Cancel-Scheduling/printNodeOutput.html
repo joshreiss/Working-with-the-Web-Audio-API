@@ -1,0 +1,17 @@
+<button id='start' onclick="context.resume()">Start</button>
+<button id='show'>Show</button>
+<script>
+  let context= new AudioContext();
+  console.log(context.sampleRate);
+  let input= new ConstantSourceNode(context,{offset:0.111});
+  input.connect(context.destination);
+  input.start();
+  show.onclick = function() {
+    var now=context.currentTime;
+    input.offset.value=0;
+    input.offset.linearRampToValueAtTime(1,now+1);
+    input.offset.cancelScheduledValues(now+0.5); //stops at 0.2
+//    input.offset.cancelAndHoldAtTime(now+0.5); //stops at 0.5
+    setTimeout(function(){ console.log(input.offset.value); },1000);
+  }
+</script>

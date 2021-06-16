@@ -1,0 +1,49 @@
+<input type="range" min=-1 max=1 value=0 step="any" id="width">
+<script>
+  let context= new AudioContext();
+  let source = new AudioBufferSourceNode(context,{loop:true});
+  let sourceL = context.createGain();
+  let sourceR = context.createGain();
+  request = new XMLHttpRequest();
+  request.open('GET','Stereo speech.wav', true);
+  request.responseType = 'arraybuffer';
+  request.onload = function() {
+    context.decodeAudioData(request.response,function(buffer) {source.buffer = buffer});
+  }
+  request.send();
+  var splitter = context.createChannelSplitter(2);
+ source.connect(splitter);
+ splitter.connect(sourceL,0);
+ splitter.connect(sourceR,1);
+  source.start();
+  let Mid = new GainNode(context,{gain:Math.sqrt(0.5)});
+  let Side = new GainNode(context,{gain:Math.sqrt(0.5)});
+  let minusSourceR = new GainNode(context,{gain:-1});
+  sourceL.connect(Mid);
+  sourceR.connect(Mid);
+  sourceL.connect(Side);
+  sourceR.connect(minusSourceR).connect(Side);
+  let gainMid = new GainNode(context);
+  let gainSide = new GainNode(context);
+  Mid.connect(gainMid);
+  Side.connect(gainSide);
+  width.oninput = function() {
+    context.resume();
+    let gainMid = Math.cos((width.value+1)*Math.PI/4);
+    let gainSide= Math.sin((width.value+1)*Math.PI/4);
+    gainMid.gain.value = Math.cos((width.value+1)*Math.PI/4);
+    gainSide.gain.value = Math.sin((width.value+1)*Math.PI/4);
+    console.log(gainMid.gain.value,gainSide.gain.value)
+  }
+  let outputL = new GainNode(context,{gain:Math.sqrt(0.5)});
+  let outputR = new GainNode(context,{gain:Math.sqrt(0.5)});
+  let minusGainSide = new GainNode(context,{gain:-1});
+  gainMid.connect(outputL);
+  gainSide.connect(outputL);
+  gainMid.connect(outputR);
+  gainSide.connect(minusGainSide).connect(outputR);
+  let merger = context.createChannelMerger(2);
+  outputL.connect(merger,0,0);
+  outputR.connect(merger,0,1);
+  merger.connect(context.destination);
+</script>

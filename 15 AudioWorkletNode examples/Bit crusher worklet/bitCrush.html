@@ -1,0 +1,12 @@
+<button onclick="context.resume()">Start</button>
+<script>
+  const context = new AudioContext();
+  context.audioWorklet.addModule('worklets.js').then(() => {
+    const osc = new OscillatorNode(context);
+    // Create a worklet node. 'BitCrusher' identifies the AudioWorkletProcessor previously registered when
+    // bitcrusher.js was imported. The options automatically initialize the correspondingly named AudioParams.
+    const bitcrusher = new AudioWorkletNode(context, 'bitcrusher', {parameterData: {bitDepth: 8}});
+    osc.connect(bitcrusher).connect(context.destination);
+    osc.start();
+});
+</script>

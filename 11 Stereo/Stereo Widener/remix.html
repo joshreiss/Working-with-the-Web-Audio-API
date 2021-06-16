@@ -1,0 +1,53 @@
+<button id="Start">Record</button>
+<button id="Stop">Stop</button>
+<div id="recordings"></div>
+<script src="recorder.js"></script>
+<script>
+  let context = new AudioContext();
+  let source=[],request=[],panNode=[];
+  source[0] = context.createBufferSource();
+  source[1] = context.createBufferSource();
+  panNode[0] = new StereoPannerNode(context,{pan:-0.75});
+  panNode[1] = new StereoPannerNode(context,{pan:0.75});
+  let mix = context.createGain();
+
+  request[0] = new XMLHttpRequest();
+  request[0].open('GET','OSR_us_000_0010_8k.wav', true);
+  request[0].responseType = 'arraybuffer';
+  request[0].onload = function() {
+    context.decodeAudioData(request[0].response,function(buffer) {source[0].buffer = buffer});
+  }
+  request[0].send();
+
+  request[1] = new XMLHttpRequest();
+  request[1].open('GET','OSR_uk_000_0020_8k.wav', true);
+  request[1].responseType = 'arraybuffer';
+  request[1].onload = function() {
+    context.decodeAudioData(request[1].response,function(buffer) {source[1].buffer = buffer});
+  }
+  request[1].send();
+
+  source[0].connect(panNode[0]).connect(mix);
+  source[1].connect(panNode[1]).connect(mix);
+  mix.connect(context.destination);
+
+  // Recording
+  var recorder = new Recorder(mix);
+  Start.onclick = function() {
+    context.resume();
+    source[0].start();
+    source[1].start();
+    recorder.record()
+  }
+  Stop.onclick = function() {
+    recorder.stop();
+    recorder.exportWAV(function(blob) {// create WAV download link using audio data blob
+      var hf = document.createElement('a');
+      hf.href = URL.createObjectURL(blob);
+      hf.innerHTML = hf.download = new Date().toISOString() + '.wav';
+      recordings.appendChild(hf);
+    });
+    recorder.clear();
+  }
+
+</script>

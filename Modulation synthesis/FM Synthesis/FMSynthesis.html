@@ -1,0 +1,30 @@
+<input type="button" value="Start/Stop" id="StartStop">
+<p>Carrier Frequency</p>
+<input type="range" min=50 max=2000 value=800 step="any" id="CarrierFrequency">
+<span id="CarrierFrequencyLabel"></span>
+<p>Modulation Depth</p>
+<input type="range" min=0 max=1000 value=200 step="any" id="ModulationDepth">
+<span id="ModulationDepthLabel"></span>
+<p>Modulation Frequency</p>
+<input type="range" min=10 max=200 value=100 step="any" id="ModulationFrequency">
+<span id="ModulationFrequencyLabel"></span>
+<script>
+  //User Interface callbacks
+  CarrierFrequency.oninput = function() {
+    CarrierFrequencyLabel.innerHTML = this.value;
+    Carrier.frequency.value=this.value;
+  }
+  ModulationDepth.oninput = function() {
+    ModulationDepthLabel.innerHTML = this.value;
+    Modulator.gain.value=this.value;
+  }
+  ModulationFrequency.oninput = function() {
+    ModulationFrequencyLabel.innerHTML = this.value;
+    ModulatorOsc.frequency.value=this.value;
+  }
+  StartStop.onclick = function() {
+    if (context.state === 'suspended') context.resume();
+    else context.suspend();
+  }
+</script>
+<script src="FMSynthesis.js"></script>

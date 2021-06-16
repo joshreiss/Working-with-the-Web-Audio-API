@@ -1,0 +1,27 @@
+<button onclick="context.resume()">Start</button>
+<button id='show'>Show</button>
+<script>
+  let context= new AudioContext();
+  context.audioWorklet.addModule('worklets.js').then(() => {
+    //create a phasor with 100 samples every period
+    let phasor = new AudioWorkletNode(context,'phasor-generator',{parameterData:{frequency:context.sampleRate/100,duty:0.25}});
+    let constant = new ConstantSourceNode(context,{offset:0.5})
+    constant.start();
+    constant.connect(phasor.parameters.get('duty'));// So actual duty cycle should be 0.25 + 0.5
+    phasor.parameters.get('duty').value=0; //together with previous line
+    phasor.connect(context.destination);
+
+    //The folllowing lines are just to print a few periods of the phasor to the console whenever someone clicks the Show button
+    let analyser= context.createAnalyser();
+    phasor.connect(analyser);
+    show.onclick = function() {
+      analyser.fftSize=1024;
+      var data = new Float32Array(analyser.fftSize);
+      analyser.getFloatTimeDomainData(data);
+      for (i=0;i<data.length/2;i++) {
+        if (Math.abs(data[i])<0.0001) console.log(data[i]+(Math.random())/1000000);
+        else console.log(data[i]);
+      }
+    }
+  });
+</script>

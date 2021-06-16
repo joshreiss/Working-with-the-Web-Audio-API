@@ -1,0 +1,25 @@
+<button onclick="context.resume()">Start</button>
+<p>Frequency</p>
+<input type="range" min=1 max=1000 value=10 id="Frequency">
+<p>Duty Cycle</p>
+<input type="range" max=1 step='any' value=0.5 id="DutyCycle">
+<script>
+  let context= new AudioContext();
+  let source= new OscillatorNode(context,{frequency:10});
+  var maxCoef= context.sampleRate/(2*source.frequency.value);
+  var real = new Float32Array(context.sampleRate/2);
+  var imag = new Float32Array(context.sampleRate/2);
+  real[0]=0,imag[0]=0;
+  for (i=1;i<maxCoef;i++) real[i]= 2*Math.sin(i*Math.PI*DutyCycle.value)/(i*Math.PI);
+  source.setPeriodicWave(context.createPeriodicWave(real,imag));
+  source.connect(context.destination);
+  source.start();
+  Frequency.oninput = function() { source.frequency.value = this.value }
+  DutyCycle.oninput = function() {
+    //Recalculate the coefficients, up to Nyquist, for this new Duty Cycle
+    maxCoef= context.sampleRate/(2*source.frequency.value);
+    for (i=1;i<maxCoef;i++) real[i]= 2*Math.sin(i*Math.PI*DutyCycle.value)/(i*Math.PI);
+    //now reset the periodic wave
+    source.setPeriodicWave(context.createPeriodicWave(real,imag));
+  }
+</script>

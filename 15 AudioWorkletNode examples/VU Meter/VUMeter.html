@@ -1,0 +1,27 @@
+<button onclick="context.resume()">Start</button>
+<script src="vumeter-node.js"></script>
+<script>
+  class VUMeterNode extends AudioWorkletNode {
+    constructor (context, updateIntervalInMS) {
+      super(context,'vumeter',{numberOfInputs:1,numberOfOutputs:0,channelCount:1,
+                               processorOptions:{updateIntervalInMS:(updateIntervalInMS || 16.67)}});
+      this._updateIntervalInMS = updateIntervalInMS;
+      this._volume = 0;
+      this.port.onmessage = event => {if (event.data.volume) this._volume = event.data.volume}
+      this.port.start();
+    }
+    draw () {console.log(this._volume)} // Draw volume value every |this._updateIntervalInMS| milliseconds
+  };
+  const context = new AudioContext();
+  context.audioWorklet.addModule('vumeter-processor.js').then(() => {
+    const oscillator = new OscillatorNode(context);
+    const vuMeterNode = new VUMeterNode(context, 245.234);
+    oscillator.connect(vuMeterNode);
+    oscillator.start();
+    function drawMeter () {
+      vuMeterNode.draw();
+      requestAnimationFrame(drawMeter);
+    }
+    drawMeter();
+  });
+</script>

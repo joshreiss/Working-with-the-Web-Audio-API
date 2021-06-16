@@ -1,0 +1,15 @@
+<button id='start' onclick="context.resume()">Start</button>
+<button id='show'>Show</button>
+<script>
+  let context= new AudioContext({sampleRate:4096});
+  let source= new OscillatorNode(context,{frequency:256});
+  let analyser= new AnalyserNode(context,{fftSize:128});
+  source.connect(analyser);
+  source.start();
+  show.onclick = function() {
+    var data = new Float32Array(analyser.fftSize);
+    analyser.getFloatTimeDomainData(data);
+    for (i=0;i<data.length/2;i++) console.log(data[i]);
+  }
+  //plot 64 points, period is 16 points 4096/256
+</script>

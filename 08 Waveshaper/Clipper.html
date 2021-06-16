@@ -1,0 +1,19 @@
+<button id='Start' onclick='context.resume()'>start</button>
+<p>Clipping Threshold</p>
+<input type="range" max=1 step="any" value="1" id="Threshold">
+<script>
+  var context = new AudioContext();
+  var source = new OscillatorNode(context);
+  var clipper = new WaveShaperNode(context);
+  source.connect(clipper).connect(context.destination);
+  source.start();
+  Threshold.oninput = function() {
+    var x,nSamples = 100,curve = new Float32Array(nSamples);
+    for (let i=0;i<nSamples;++i) {
+      x = 2*i/nSamples-1; // x goes from -1 to +1
+      if (Math.abs(x)>this.value) curve[i]=this.value*Math.sign(x);
+      else curve[i]=x;
+    }
+    clipper.curve=curve;
+  }
+</script>

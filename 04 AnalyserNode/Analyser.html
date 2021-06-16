@@ -1,0 +1,28 @@
+<canvas id="canvas" width="512" height="256" ></canvas>
+<button onclick="audioContext.resume()">Start</button>
+<input type="checkbox" id="Spectrum">Spectrum<br>
+<input type="range" max=4000 value=440 id="Frequency">Frequency
+<script>
+  let canvasContext= canvas.getContext('2d');
+  let audioContext= new AudioContext();
+  let source= audioContext.createOscillator();
+  let analyser= audioContext.createAnalyser();
+  var real = new Float32Array(10);
+  var imag = new Float32Array([0,1,1,1,1,1,1,1,1,1]);
+  source.setPeriodicWave(audioContext.createPeriodicWave(real,imag));
+  source.connect(analyser);
+  source.start();
+  var data = new Uint8Array(analyser.frequencyBinCount);
+  Frequency.oninput = function() { source.frequency.value = this.value;}
+  draw();
+  function draw() {
+    if (Spectrum.checked) analyser.getByteFrequencyData(data);
+    else analyser.getByteTimeDomainData(data);  // get data for this sample
+    canvasContext.clearRect(0,0,canvas.width,canvas.height);
+    for (let i = 0; i < data.length; i++) {
+      if (Spectrum.checked) canvasContext.fillRect(i,canvas.height*(1-data[i]/256),1,canvas.height*data[i]/256);
+      else canvasContext.fillRect(i,canvas.height*(1-data[i]/256)-1,1,1);
+    }
+    requestAnimationFrame(draw);
+  };
+</script>

@@ -1,0 +1,10 @@
+<script>
+  //See https://mue.music.miami.edu/thesis/jvandekieft/jvchapter2.htm
+  var x = [1,2,4,4];
+  var h = [1,2,3];
+  var yLength= x.length + h.length -1
+  var y = new Array(yLength).fill(0);
+  for (n=0;n<yLength;n++) for (k=0;(k<=n)&&(k<h.length);k++)
+    if (n-k<x.length) y[n]+=h[k]*x[n-k];
+console.log(y)
+</script>

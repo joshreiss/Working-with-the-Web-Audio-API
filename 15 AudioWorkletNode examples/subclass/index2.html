@@ -1,0 +1,20 @@
+<button onclick="context.resume()">Start</button>
+<script>
+   // Extends AudioWorkletNode to simplify the cross-thread message posting.
+   class MessengerWorkletNode extends AudioWorkletNode {
+     constructor(context) {
+       super(context, 'messenger-processor');
+       this.port.onmessage = (event) => { console.log('[Node:] ' + event.data.message); };
+     }
+     log(event) {
+       console.log('test');
+       this.port.postMessage('test')
+     }
+   }
+   let context= new AudioContext();
+   context.audioWorklet.addModule('messenger-processor.js').then(() => {
+     let messengerWorkletNode = new MessengerWorkletNode(context);
+     messengerWorkletNode.connect(context.destination);
+     messengerWorkletNode.log()
+   });
+ </script>

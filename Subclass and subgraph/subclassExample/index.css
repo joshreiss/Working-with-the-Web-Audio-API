@@ -1,0 +1,68 @@
+*{
+	border:0px;
+	padding: 0px;
+	margin: 0px;
+
+	box-sizing: border-box;
+	border-collapse: collapse;
+
+	font-family: helvetica, sans-serif;
+}
+html, body{
+	height: 100%;
+}
+body{
+	background: #eee;
+}
+
+/* ----- ----- */
+.wrapper {
+	height:100%;
+	width:100%;
+
+	position:fixed;
+}
+
+.freqAnalyzer {
+}
+
+.hidden-settings{
+	right: -150px !important;
+}
+.div_settings{
+	background: #eee;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: stretch;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	z-index: 1;
+}
+.div_settings div{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 10px;
+}
+.div_settings div select,
+.div_settings div span{
+	background: transparent;
+	color: #333;
+	font-size: 14px;
+	width: 160px;
+}
+#bar_position{
+	transform: rotateY(180deg);
+}
+.div_zoom{
+	background: rgba(255,255,255,.4);
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	width: 0px;
+	z-index: 1;
+}

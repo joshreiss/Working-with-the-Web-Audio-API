@@ -1,0 +1,27 @@
+<button id='show'>Show</button>
+<script>
+  let source=[],data;
+  let context= new AudioContext();
+  let analyser= new AnalyserNode(context);
+  let merger= context.createChannelMerger(6);
+  var splitter = context.createChannelSplitter(4);
+  let gain= context.createGain();
+  gain.channelCount = 4;
+  gain.channelInterpretation = 'speakers';
+  gain.channelCountMode = 'explicit';
+  console.log(gain)
+  for (i=0;i<6;i++) {
+    source[i]= new ConstantSourceNode(context,{offset:Math.pow(2,i)});
+    source[i].start();
+    source[i].connect(merger,0,i);
+  }
+//  merger.connect(analyser) // shows downmixing for time domain data of analyser
+  merger.connect(gain).connect(splitter);
+  splitter.connect(analyser,3)
+  show.onclick = function() {
+    context.resume();
+    data = new Float32Array(analyser.fftSize);
+    analyser.getFloatTimeDomainData(data);
+    console.log(data[7]);
+  }
+</script>

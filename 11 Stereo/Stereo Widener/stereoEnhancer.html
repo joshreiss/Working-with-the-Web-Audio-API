@@ -1,0 +1,51 @@
+<input type="range" min=0 max=1 value=0.5 step="any" id="width">
+<script>
+  let context= new AudioContext();
+  let source = new AudioBufferSourceNode(context,{loop:true});
+  let sourceL = context.createGain();
+  let sourceR = context.createGain();
+  request = new XMLHttpRequest();
+  request.open('GET','Stereo speech.wav', true);
+  request.responseType = 'arraybuffer';
+  request.onload = function() {
+    context.decodeAudioData(request.response,function(buffer) {source.buffer = buffer});
+  }
+  request.send();
+  var splitter = context.createChannelSplitter(2);
+ source.connect(splitter);
+ splitter.connect(sourceL,0);
+ splitter.connect(sourceR,1);
+  source.start();
+    /* M = (L+R)/sqrt(2), S = (L-R)/sqrt(2) */
+  let Mid = new GainNode(context,{gain:Math.sqrt(0.5)});
+  let Side = new GainNode(context,{gain:Math.sqrt(0.5)});
+  let minusSourceR = new GainNode(context,{gain:-1});
+  sourceL.connect(Mid);
+  sourceR.connect(Mid);
+  sourceL.connect(Side);
+  sourceR.connect(minusSourceR).connect(Side);
+  let gainMid = new GainNode(context);
+  let gainSide = new GainNode(context);
+  Mid.connect(gainMid);
+  Side.connect(gainSide);
+  /* L = (M+S)/sqrt(2), R = (M-S)/sqrt(2) */
+  let outputL = new GainNode(context,{gain:Math.sqrt(0.5)});
+  let outputR = new GainNode(context,{gain:Math.sqrt(0.5)});
+  let minusGainSide = new GainNode(context,{gain:-1});
+  gainMid.connect(outputL);
+  gainSide.connect(outputL);
+  gainMid.connect(outputR);
+  gainSide.connect(minusGainSide).connect(outputR);
+  width.oninput = function() {
+    context.resume();
+    /* M *= 2*(1-width), S *= 2*width; amplify mid and side signal seperately */
+    gainMid.gain.value = 2-2*width.value;
+    gainSide.gain.value = 2*width.value;
+    console.log(gainMid.gain.value,gainSide.gain.value)
+  }
+  let merger = context.createChannelMerger(2);
+  outputL.connect(merger,0,0);
+  outputR.connect(merger,0,1);
+  merger.connect(context.destination);
+/* Simplified: L' = L-R*(1-2*width), R' = L*(1-2*width)+R */
+</script>

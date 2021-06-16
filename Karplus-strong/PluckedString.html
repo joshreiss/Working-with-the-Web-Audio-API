@@ -1,30 +1,27 @@
-<body>
-  <html>
+<p>Source</p>
+<select id="Source">
+  <option value="noise">Noise</option>
+  <option value="sine">Sine</option>
+  <option value="sawtooth">Sawtooth</option>
+  <option value="triangle">Triangle</option>
+  <option value="square">Square</option>
+</select>
     <p>Decay</p>
-    <input type="range" min="0.8" max="0.999" value="0.9" step="any" id="Decay">
+    <input type="range" min=0.8 max="0.999" value="0.9" step="any" id="Decay">
     <span id="DecayLabel"></span>
     <p>Delay (ms)</p>
-    <input type="range" min="0" max="20" value="1" step="any" id="Delay">
+    <input type="range" min=0 max=20 value=10 step="any" id="Delay">
     <span id="DelayLabel"></span>
     <p>Width (ms)</p>
-    <input type="range" min="0" max="20" value="3" step="any" id="Width">
+    <input type="range" min=0 max="20" value=10 step="any" id="Width">
     <span id="WidthLabel"></span>
     <p>Cut-off Frequency (Hz)</p>
-    <input type="range" min="0" max="10000" value="10000" step="any" id="Freq">
-    <span id="FreqLabel"></span>
-    <p>Source</p>
-    <select id="Source">
-      <option value="noise">Noise</option>
-      <option value="sine">Sine</option>
-      <option value="sawtooth">Sawtooth</option>
-      <option value="triangle">Triangle</option>
-      <option value="square">Square</option>
-    </select>
+    <input type="range" min=0 max="10000" value="10000" step="any" id="Freq">
+    <span id="Freq label"></span>
     <p></p>
-    <script src="recorder.js"></script>
     <input type="button" value="play" id="Play">
     <input type="button" value="record" id="Start">
     <input type="button" value="stop" id="Stop">
     <div id="recordings"></div>
-    <script src="PluckedString.js"></script>
-</body>
+    <script src="recorder.js"></script>
+    <script src="PluckedStringWithFilter.js"></script>

@@ -1,0 +1,24 @@
+<canvas id="canvas" width="64" height="256" ></canvas>
+<button onclick="audioContext.resume()">Start</button>
+<script>
+  const audioContext = new AudioContext();
+  navigator.mediaDevices.getUserMedia ({audio:true}).then(function(stream) {
+    var source = new MediaStreamAudioSourceNode(audioContext,{mediaStream : stream});
+    var level,smoothLevel=0;
+    let canvasContext= canvas.getContext('2d');
+    let analyser= audioContext.createAnalyser();
+    source.connect(analyser);
+    var data = new Float32Array(analyser.frequencyBinCount);
+    console.log(analyser.fftSize);
+    function draw() {
+      requestAnimationFrame(draw);
+      analyser.getFloatTimeDomainData(data);  // get data for this sample
+      canvasContext.clearRect(0,0,canvas.width,canvas.height);
+      level=0;
+      for (let i=0; i<data.length; i++) level+=5*Math.abs(data[i])/data.length;
+      smoothLevel=0.85*smoothLevel+0.15*level;
+      canvasContext.fillRect(1,canvas.height*(1-smoothLevel)-1,canvas.width,canvas.height);
+    };
+    draw();
+  })
+</script>

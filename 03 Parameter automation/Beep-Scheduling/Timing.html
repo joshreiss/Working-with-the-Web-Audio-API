@@ -1,0 +1,23 @@
+<button id="play">Play</button>
+<button id="stamp">Stamp</button>
+<button id="stop">Stop</button>
+<script>
+// define variables
+let context,source;
+// wire up buttons to stop and play audio
+play.onclick = () => {
+  if(!context) context = new AudioContext();
+  source=context.createOscillator();
+  getData();
+  source.start(0);
+};
+stop.onclick = () => {source.stop(0);};
+// function to output timestamps
+stamp.onclick = () => {
+  let ts = context.getOutputTimestamp();
+  let ct=context.currentTime;
+  console.log('Currext time: ' + ct);
+  console.log('Context time: ' + ts.contextTime);
+  console.log('Performance time: ' + ts.performanceTime);
+}
+</script>
