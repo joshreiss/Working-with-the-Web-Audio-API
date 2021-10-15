@@ -1,9 +1,0 @@
-<audio controls id='file' onplay='context.resume()'>
-  <source src="viper.mp3">
-</audio>
-<script>
-  context = new AudioContext();
-  let source = context.createMediaElementSource(file);
-  let gainNode = new GainNode(context,{gain:0.5});
-  source.connect(gainNode).connect(context.destination);
-</script>

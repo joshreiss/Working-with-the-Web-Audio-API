@@ -1,0 +1,26 @@
+<p>Gain</p>
+<input type='range' min=0.5 max=0.99 value=0.8 step='any' id='Gain'>
+<p>Delay (ms)</p>
+<input type='range' min=0.04 max=0.2 value=0.08 step='any' id='Delay'>
+<input type='button' value='play' onclick='context.resume()' id='Play'>
+<script>
+  var context = new AudioContext()
+  let tone = new OscillatorNode(context,{frequency:2000})
+  tone.start()
+  toneGain = new GainNode(context,{gain:0})
+  var delay= new DelayNode(context,{delayTime:0.08})
+  var feedback= new GainNode(context,{gain:0.8})
+  tone.connect(toneGain)
+  toneGain.connect(delay)
+  delay.connect(feedback)
+  feedback.connect(delay)
+  delay.connect(context.destination)
+  Delay.oninput = () =>  delay.delayTime.value = Delay.value
+  Gain.oninput = () => feedback.gain.value = Gain.value
+  Play.onclick = () => {
+    context.resume()
+    let now = context.currentTime
+    toneGain.gain.setValueAtTime(1, now)
+    toneGain.gain.linearRampToValueAtTime(0, now + 0.05)
+  }
+</script>

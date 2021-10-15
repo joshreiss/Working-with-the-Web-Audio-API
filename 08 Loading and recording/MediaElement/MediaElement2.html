@@ -1,0 +1,11 @@
+<button id='play'>Start</button>
+<script>
+  context = new AudioContext()
+  file = new Audio('beat1.mp3')
+  let source = context.createMediaElementSource(file)
+  source.connect(context.destination)
+  play.onclick = function() {
+    context.resume()
+    file.play()
+  }
+</script>

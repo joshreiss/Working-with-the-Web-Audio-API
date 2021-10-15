@@ -1,0 +1,20 @@
+<button onclick=context.resume()>Start</button>
+<select id=Type>
+  <option value=lowpass>Lowpass</option>
+  <option value=highpass>Highpass</option>
+</select>
+<p>Cut-off frequency</p>
+<input type=range min=0 max=5000 value=1 step=any id=Cutoff>
+<script>
+  let context= new AudioContext()
+  Promise.all([
+    context.audioWorklet.addModule('noiseWorklet.js'),
+    context.audioWorklet.addModule('filterMessagingWorklet.js')
+  ]).then(() => {
+    let Noise = new AudioWorkletNode(context,'noise-generator')
+    let Filter = new AudioWorkletNode(context,'first-order-filter')
+    Cutoff.oninput = () => Filter.parameters.get('frequency').value=Cutoff.value
+    Type.onchange = () => Filter.port.postMessage(Type.value)
+    Noise.connect(Filter).connect(context.destination)
+  })
+</script>

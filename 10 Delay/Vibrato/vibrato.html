@@ -1,0 +1,7 @@
+<audio id='file' controls loop onplay='context.resume()'>
+  <source src='trumpet.wav'>
+</audio>
+<br>Vibrato Depth
+<input type='range' min=0 max=0.05 value=0 step='any' id='Depth' oninput='Update()'>
+<br>Vibrato Frequency
+<input type='range' min=0.5 max=8 value=5 step='any' id='LFO_F' oninput='Update()'>

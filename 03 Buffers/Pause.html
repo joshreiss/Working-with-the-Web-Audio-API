@@ -1,0 +1,29 @@
+<button onclick='Play()'>Play</button>
+<button onclick='Pause()'>Pause</button>
+<script>
+  var FirstTime=true
+  var context = new AudioContext()
+  var source = context.createBufferSource()
+  source.connect(context.destination)
+  let bufferDuration=4
+  let bufferLength = bufferDuration*context.sampleRate
+  let array = new Float32Array(bufferLength)
+  let instantFreq
+  for (var i=0;i<array.length;i++) {
+    instantFreq=1000*i/bufferLength
+    array[i]=Math.sin(2*Math.PI*instantFreq*i/context.sampleRate)
+  }
+  source.buffer = context.createBuffer(1,bufferLength,context.sampleRate)
+  source.buffer.copyToChannel(array,0)
+  function Play() {
+    context.resume()
+    if (FirstTime) {
+      source.start()
+      FirstTime=false
+    }
+    else source.playbackRate.value=1
+  }
+  function Pause() {
+    source.playbackRate.value=0
+  }
+</script>

@@ -1,0 +1,10 @@
+<button onclick='context.resume()'>Start</button>
+<script>
+  let context=new AudioContext()
+  async function audioGraph(context) {
+    await context.audioWorklet.addModule('basicnoise.js')
+    let NoiseNode = new AudioWorkletNode(context,'noise-generator')
+    NoiseNode.connect(context.destination)
+  }
+  audioGraph(context)
+</script>

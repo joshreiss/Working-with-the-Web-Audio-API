@@ -1,0 +1,14 @@
+<audio controls id='file' src='beat1.mp3'></audio><br>
+<input type='range' min=0 max=1 value=0.5 step='any' id='Volume'>Volume<br>
+<input type='range' min=0.25 max=4 value=1 step='any' id='Rate'>Rate<br>
+<input type='checkbox' id='Loop'>Loop
+<input type='checkbox' id='Preserve'>Preserve pitch<br>
+<button id='Show'>Show position</button>
+<span id=Position></span><br>
+<script>
+  Show.oninput () { Position.innerHTML = file.currentTime }
+  Rate.oninput = function() { file.playbackRate = this.value }
+  Volume.oninput = function() { file.volume = this.value }
+  Preserve.oninput = function() { file.preservesPitch = this.checked }
+  Loop.oninput = function() { file.loop = this.checked }
+</script>

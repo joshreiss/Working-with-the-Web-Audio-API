@@ -1,0 +1,11 @@
+<button id='start' onclick='context.resume()'>Make noise</button>
+<script>
+  let i,channel,context= new AudioContext()
+  let source = context.createBufferSource()
+  let nFrames = 3*context.sampleRate
+  source.buffer = context.createBuffer(2,nFrames,context.sampleRate)
+  for (channel=0;channel<2;channel++) for (i=0;i<nFrames;i++) 
+    source.buffer.getChannelData(channel)[i] = 2*Math.random()-1
+  source.start()
+  source.connect(context.destination)
+</script>

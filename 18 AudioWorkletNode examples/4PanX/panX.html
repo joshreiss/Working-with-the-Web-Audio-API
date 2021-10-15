@@ -1,0 +1,27 @@
+<button onclick=context.resume()>Start</button>
+Panning: <input type=range min=-1 max=1 step=any id=Panning>
+Speaker: <input type=range min=1 max=5 step=1 id=Speaker>
+<script>
+  let context= new AudioContext()
+  context.audioWorklet.addModule('panX.js').then(() => {
+    let Source= new OscillatorNode(context)
+    Source.start()
+    const panX = new AudioWorkletNode(context,'panX-processor',{
+      channelCount:5,
+      channelCountMode:'explicit',
+      channelInterpretation:'discrete'
+    })
+    console.log(panX.channelCount)
+    Source.connect(panX)
+    var Splitter = context.createChannelSplitter(5)
+    panX.connect(Splitter)
+    Splitter.connect(context.destination,1)
+    Panning.oninput = function() {
+      panX.parameters.get('pan').value=this.value
+    }
+    Speaker.oninput = function() {
+      Splitter.disconnect()
+      Splitter.connect(context.destination,this.value-1)
+    }
+  })
+</script>

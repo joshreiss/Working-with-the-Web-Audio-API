@@ -1,0 +1,14 @@
+<button onclick='context.resume()'>Start</button><br>
+Offset <input type='range' min=0 max=2 step='any' value=0 id='Offset'>
+<script>
+  var context = new AudioContext()
+  let offsetNode = context.createConstantSource()
+  let tone = context.createOscillator()
+  let offsetTone = context.createGain()
+  offsetNode.start()
+  tone.start()
+  offsetNode.connect(offsetTone)
+  tone.connect(offsetTone)
+  offsetTone.connect(context.destination)
+  Offset.oninput = () => offsetNode.offset.value = Offset.value
+</script>

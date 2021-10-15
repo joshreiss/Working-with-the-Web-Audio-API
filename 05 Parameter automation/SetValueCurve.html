@@ -1,0 +1,16 @@
+<input type='button' value='Beep' id='triggerBeep'>
+<p>Duration</p>
+<input type='number' id='Duration' min=0 max=1000 value=50>
+<script>
+  var context = new AudioContext()
+  var Volume = new GainNode(context,{gain:0})
+  var Tone = new OscillatorNode(context)
+  Tone.connect(Volume).connect(context.destination)
+  Tone.start()
+  var curve = new Float32Array(100)
+  for (i=0;i<100;i++) curve[i]=Math.sin(Math.PI*i/99)
+  triggerBeep.onclick = function() {
+    context.resume()
+    Volume.gain.setValueCurveAtTime(curve,0,Duration.value/1000)
+  }
+</script>

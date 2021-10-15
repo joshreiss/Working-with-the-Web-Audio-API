@@ -1,0 +1,42 @@
+<button onclick='Start()'>Start</button>
+<button onclick='Reverse()'>Reverse</button>
+<script>
+  var context = new AudioContext()
+  var Forwards = true
+  var source,sourceReversed
+  let bufferDuration=10
+  let bufferLength = bufferDuration*context.sampleRate
+  let array = new Float32Array(bufferLength)
+  let instantFreq
+  for (var i=0;i<array.length;i++) {
+    instantFreq=1000*i/bufferLength
+    array[i]=Math.sin(2*Math.PI*instantFreq*i/context.sampleRate)
+  }
+  var reversedArray = array.slice().reverse()
+  function Start() {
+    context.resume()
+    source = new AudioBufferSourceNode(context)
+    source.loop=true
+    source.connect(context.destination)
+    source.buffer = context.createBuffer(1,bufferLength,context.sampleRate)
+    source.buffer.copyToChannel(array,0)
+    source.start()
+    startTime=context.currentTime
+    playheadPosition=0
+  }
+  function Reverse() {
+    source.stop()
+    source = new AudioBufferSourceNode(context)
+    source.loop=true
+    source.connect(context.destination)
+    source.buffer = context.createBuffer(1,bufferLength,context.sampleRate)
+    playheadPosition += context.currentTime-startTime
+    playheadPosition = playheadPosition%source.buffer.duration
+    playheadPosition = source.buffer.duration-playheadPosition
+    if (Forwards) source.buffer.copyToChannel(reversedArray,0)
+    else source.buffer.copyToChannel(array,0)
+    source.start(0,playheadPosition)
+    startTime=context.currentTime
+    Forwards = !Forwards
+  }
+</script>

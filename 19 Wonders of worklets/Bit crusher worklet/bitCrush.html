@@ -1,0 +1,10 @@
+<button onclick=context.resume()>Start</button>
+<script>
+  const context = new AudioContext()
+  context.audioWorklet.addModule('bitCrushWorklet.js').then(() => {
+    let osc = new OscillatorNode(context)
+    let bitcrusher = new AudioWorkletNode(context,'bitcrusher')
+    osc.connect(bitcrusher).connect(context.destination)
+    osc.start()
+  })
+</script>

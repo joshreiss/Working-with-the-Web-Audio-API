@@ -1,0 +1,16 @@
+<p>Frequency</p>
+<input type='number' min=50 max=1000 value=440 step='any' id='Frequency'>
+<p>Delay (ms)</p>
+<input type='number' min=0.001 max=0.01 value=0.005 step=0.001 id='Delay'>
+<input type='button' value='play' onclick='context.resume()' id='Play'>
+<script>
+  var context = new AudioContext()
+  let tone = new OscillatorNode(context,{frequency:440})
+  let delay= new DelayNode(context,{delayTime:0.005})
+  tone.start()
+  tone.connect(delay)
+  tone.connect(context.destination)
+  delay.connect(context.destination)
+  Delay.oninput = () => delay.delayTime.value = Delay.value
+  Frequency.oninput = () => tone.frequency.value = Frequency.value
+</script>

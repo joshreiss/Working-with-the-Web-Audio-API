@@ -1,0 +1,15 @@
+<button onclick='context.resume()'>Start</button>
+<p>Frequency</p>
+<input type='range' min=1 max=1000 value=10 id='Frequency'>
+<script>
+  let context= new AudioContext()
+  let source= new OscillatorNode(context,{frequency:10})
+  var maxCoef= context.sampleRate/(2*source.frequency.value)
+  var a = new Float32Array(context.sampleRate/2)
+  var b = new Float32Array(context.sampleRate/2)
+  for (i=1;i<maxCoef;i+=2) b[i]= 4/(i*Math.PI)
+  source.setPeriodicWave(context.createPeriodicWave(a,b))
+  source.start()
+  Frequency.oninput = () => { source.frequency.value = Frequency.value }
+  source.connect(context.destination)
+</script>

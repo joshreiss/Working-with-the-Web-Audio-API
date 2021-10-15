@@ -1,0 +1,24 @@
+<audio controls loop id='file' onplay='Reset()' src='applause.mp3'></audio></p>
+<input type='checkbox' id='normalize' onclick='Reset()' checked='checked'>Normalize
+<input type='checkbox' id='short' onclick='Reset()' checked='checked'>Short IR
+<script>
+  var buffers=[]
+  context = new AudioContext()
+  source = context.createMediaElementSource(file)
+  convolver = context.createConvolver()
+  function loadBuffer(IR,index) {
+    fetch(IR)
+    .then(response => response.arrayBuffer())
+    .then(buffer => context.decodeAudioData(buffer))
+    .then(data => buffers[index] = data)
+  }
+  loadBuffer('unit_short.wav',0)
+  loadBuffer('unit_long.wav',1)
+  function Reset() {
+    context.resume()
+    convolver.normalize = normalize.checked //must be set before the buffer
+    if (short.checked) convolver.buffer = buffers[0]
+    else convolver.buffer = buffers[1]
+    source.connect(convolver).connect(context.destination)
+  }
+</script>

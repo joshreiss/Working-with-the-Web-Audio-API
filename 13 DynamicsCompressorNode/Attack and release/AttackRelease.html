@@ -1,0 +1,16 @@
+<canvas id='canvas' width=600 height=300 style='border:1px solid'></canvas><br>
+<button id='Start' onclick='audioContext.resume()'>Start</button><br>
+<input type='range' min=0 max=1 value='0.1' step='any' id='Attack'>Attack<br>
+<input type='range' min=0 max=1 value='0.1' step='any' id='Release'>Release<br>
+<button id='Show'>Show</button>
+<script>
+  let canvasContext= canvas.getContext('2d')
+  let audioContext= new AudioContext()
+  let source= audioContext.createConstantSource()
+  source.start()
+  let compressor= audioContext.createDynamicsCompressor()
+  source.connect(compressor).connect(audioContext.destination)
+  Attack.oninput = () => compressor.attack.value = Attack.value
+  Release.oninput = () => compressor.release.value = Release.value
+</script>
+<script src='AttackRelease.js'></script>

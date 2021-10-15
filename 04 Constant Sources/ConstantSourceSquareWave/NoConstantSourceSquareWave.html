@@ -1,0 +1,19 @@
+<button onclick='context.resume()'>Start</button>
+<span>Frequency: </span>
+<input type='range' min=0 max=1000 step='any' value=100 id='F'>
+<script>
+  var context = new AudioContext()
+  var sinusoid=[],amplitude=[]
+  var constantNode = context.createConstantSource()
+  for (i=0;i<10;i++) {
+    sinusoid[i] = new OscillatorNode(context,{frequency:(2*i+1)*F.value})
+    amplitude[i] = new GainNode(context)
+    amplitude[i].gain.value=4/((2*i+1)*Math.PI)
+    sinusoid[i].connect(amplitude[i])
+    amplitude[i].connect(context.destination)
+    sinusoid[i].start()
+  }
+  F.oninput = () => {
+    for (i=0;i<10;i++) sinusoid[i].frequency.value = (2*i+1)*F.value
+  }
+</script>

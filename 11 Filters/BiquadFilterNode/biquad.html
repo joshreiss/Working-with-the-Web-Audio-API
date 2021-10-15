@@ -1,0 +1,19 @@
+<button id='start'>Make noise</button>
+<canvas id='canvas' width='600' height ='300' style='border:1px solid'></canvas><br>
+<select id='Type' oninput='UICallback()'>
+  <option value='lowpass'>lowpass</option>
+  <option value='highpass'>highpass</option>
+  <option value='bandpass'>bandpass</option>
+  <option value='lowshelf'>lowshelf</option>
+  <option value='highshelf'>highshelf</option>
+  <option value='peaking'>peaking</option>
+  <option value='notch'>notch</option>
+  <option value='allpass'>allpass</option>
+</select>
+<br>Frequency<br>
+<input id='Frequency' type='range' max=10000 value=800 oninput='UICallback()'>
+<br>Q<br>
+<input id='Q' type='range' min=-50 max=50 value=1 step='any' oninput='UICallback()'>
+<br>Gain<br>
+<input id='Gain' type='range' min=1 max=20 value=1 oninput='UICallback()'>
+<script src='biquad.js'></script>

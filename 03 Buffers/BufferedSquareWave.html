@@ -1,0 +1,30 @@
+<button onclick='context.resume()'>Start</button>
+<span>Frequency: </span>
+<input type='range' min=0 max=1000 step='any' value=100 id='F'>
+<script>
+  let context= new AudioContext()
+  // Create a buffer source for one period of a square wave
+  let bufferLength=context.sampleRate
+  let array = new Float32Array(bufferLength)
+  for (var i=0;i<array.length;i++) array[i]=Math.sin(2*Math.PI*i/context.sampleRate)
+  var buffer = context.createBuffer(1,bufferLength,context.sampleRate)
+  buffer.copyToChannel(array,0)
+  var source=[],amplitude=[]
+  // Use the buffer in lots of buffersourcenodes, one for each Fourier term
+  for (i=0;i<10;i++) {
+    var n=2*i+1
+    source[i] = new AudioBufferSourceNode(context)
+    source[i].buffer = buffer
+    // Play the buffer at different rates for each Fourier term
+    source[i].playbackRate.value=n*F.value
+    source[i].loop=true
+    amplitude[i] = new GainNode(context)
+    amplitude[i].gain.value=4/(n*Math.PI)
+    source[i].connect(amplitude[i])
+    amplitude[i].connect(context.destination)
+    source[i].start()
+  }
+  F.oninput = () => {
+    for (i=0;i<10;i++) source[i].playbackRate.value = (2*i+1)*F.value
+  }
+</script>

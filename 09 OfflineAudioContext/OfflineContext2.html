@@ -1,0 +1,11 @@
+<audio controls id='audio'></audio>
+<script src='bufferToWave.js'></script>
+<script>
+  let offlineContext = new OfflineAudioContext(1,44100*5,44100)
+  source = offlineContext.createOscillator()
+  source.connect(offlineContext.destination)
+  source.start()
+  offlineContext.startRendering().then(buffer => {
+    audio.src = URL.createObjectURL(bufferToWave(buffer, 0,44100*5))
+  })
+</script>

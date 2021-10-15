@@ -1,0 +1,14 @@
+<button id='play' onclick='context.resume()'>Play</button><br>
+<script>
+  let context = new AudioContext()
+  let offlineContext = new OfflineAudioContext(1,3*44100,44100)
+  source = offlineContext.createOscillator()
+  source.connect(offlineContext.destination)
+  source.start()
+  offlineContext.startRendering().then(data => {
+    let bufferedSource = context.createBufferSource()
+    bufferedSource.buffer = data
+    bufferedSource.connect(context.destination)
+    play.onclick = () => { bufferedSource.start() }
+  })
+</script>

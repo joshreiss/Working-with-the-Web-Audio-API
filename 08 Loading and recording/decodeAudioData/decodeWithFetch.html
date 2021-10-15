@@ -1,0 +1,13 @@
+<button id='play' onclick='context.resume()'>Play</button><br>
+Playback rate<input id='playRate' type='range' min=0.3 max=3 step=0.05 value=1>
+<script>
+  let context = new AudioContext()
+  let source = context.createBufferSource()
+  source.start()
+  source.connect(context.destination)
+  fetch('beat1.mp3')
+  .then(response => response.arrayBuffer())
+  .then(buffer => context.decodeAudioData(buffer))
+  .then(data => source.buffer = data)
+  playRate.oninput = () => source.playbackRate.value = playRate.value
+</script>

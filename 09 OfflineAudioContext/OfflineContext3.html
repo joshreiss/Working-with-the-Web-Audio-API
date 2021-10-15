@@ -1,0 +1,16 @@
+<div id='progress'></div>
+<script>
+  duration=10
+  var offlineContext = new OfflineAudioContext(1, duration*44100, 44100)
+  offlineContext.onstatechange = function (event) {
+    if (offlineContext.state === 'suspended') {
+      var completed = 100*(offlineContext.currentTime/duration).toFixed(2)
+      progress.innerHTML += completed + ' percent complete<br>'
+      offlineContext.resume()
+      if (offlineContext.currentTime + 2<duration)
+        offlineContext.suspend(offlineContext.currentTime + 2)
+    }
+  }
+  offlineContext.suspend(2)
+  offlineContext.startRendering()
+</script>

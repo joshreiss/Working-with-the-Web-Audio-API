@@ -1,8 +1,8 @@
-<button onclick="context.resume()">Start</button>
+<button onclick='context.resume()'>Start</button>
 <script>
-  var context= new AudioContext();
-  var Tone= new OscillatorNode(context);
-  var Volume= new gainNode(context,{gain:0.25});
-  Tone.start();
-  Tone.connect(Volume).connect(context.destination);
+  var context= new AudioContext()
+  var Tone= new OscillatorNode(context)
+  var Volume= new GainNode(context,{gain:0.25})
+  Tone.start()
+  Tone.connect(Volume).connect(context.destination)
 </script>

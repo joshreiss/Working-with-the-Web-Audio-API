@@ -1,0 +1,15 @@
+<button onclick='context.resume()'>Start</button>
+<input type='range' id='modFreq' min=0 max=1000 step='any' value=100>
+<script>
+  var context = new AudioContext()
+  var osc1 = new OscillatorNode(context,{frequency:80})
+  osc1.start()
+  var filter = new BiquadFilterNode(context,{frequency:200})
+  var osc2 = new OscillatorNode(context,{frequency:100})
+  osc2.start()
+  var modGain = new GainNode(context,{gain:3600})
+  osc1.connect(filter)
+  osc2.connect(modGain).connect(filter.detune)
+  filter.connect(context.destination)
+  modFreq.onchange = function() { osc2.frequency.value = this.value }
+</script>

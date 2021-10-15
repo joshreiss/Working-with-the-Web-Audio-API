@@ -1,0 +1,18 @@
+<input type='range' min=-1 max=1 value=0 step='any' id='width'>
+<script>
+  let context= new AudioContext()
+  context.audioWorklet.addModule('stereoWidenerWorklet.js').then(() => {
+    let Widener= new AudioWorkletNode(context,'stereo-widener')
+    let monoSource = context.createOscillator()
+    let source = new StereoPannerNode(context,{pan:0.5})
+    source.pan.value = 0.5
+    monoSource.connect(source)
+    source.connect(Widener)
+    monoSource.start()
+    Widener.connect(context.destination)
+    width.oninput = () => {
+      context.resume()
+      Widener.parameters.get('width').value= width.value
+    }
+  })
+</script>

@@ -1,0 +1,16 @@
+<p>Decay</p>
+<input type='range' min=0.8 max='0.999' value='0.9' step='any' id='Decay'>
+<span id='DecayLabel'></span>
+<p>Delay (ms)</p>
+<input type='range' min=0 max=20 value=10 step='any' id='Delay'>
+<span id='DelayLabel'></span>
+<p>Width (ms)</p>
+<input type='range' min=0 max='20' value=10 step='any' id='Width'>
+<span id='WidthLabel'></span>
+<p>
+<input type='button' value='play' id='Play'>
+<script>
+  DecayLabel.innerHTML = Decay.value
+  DelayLabel.innerHTML = Delay.value
+</script>
+<script src='KarplusStrongV2.js'></script>

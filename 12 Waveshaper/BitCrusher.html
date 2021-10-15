@@ -1,0 +1,20 @@
+<button id='Start' onclick='context.resume()'>start</button>
+<p>Bit depth</p>
+<input type='range' min=1 max=4 value=3 step=1 id='nBits'><br>
+<script>
+  var context = new AudioContext()
+  var source = new OscillatorNode(context)
+  var bitCrusher = new WaveShaperNode(context)
+  source.connect(bitCrusher).connect(context.destination)
+  source.start()
+  nBits.oninput = () => {
+    var x,nSamples = 65536,curve = new Float32Array(nSamples)
+    var nLevels=Math.pow(2,nBits.value)
+    for (n=0;n<nSamples;++n) {
+      x = n*nLevels/nSamples
+      y = Math.floor(x)
+      curve[n] = (2*y+1)/nLevels-1
+    }
+    bitCrusher.curve=curve
+  }
+</script>

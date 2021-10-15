@@ -1,0 +1,8 @@
+<button onclick=context.resume()>Start</button>
+<script>
+  let context= new AudioContext()
+  context.audioWorklet.addModule('basicNoise.js').then(() => {
+    let NoiseNode = new AudioWorkletNode(context,'noise-generator')
+    NoiseNode.connect(context.destination)
+  })
+</script>

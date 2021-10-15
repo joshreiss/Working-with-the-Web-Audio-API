@@ -1,0 +1,9 @@
+<audio controls id='file' onplay='context.resume()'>
+  <source src='beat1.mp3'>
+</audio>
+<script>
+  let context = new AudioContext()
+  let source = context.createMediaElementSource(file)
+  let gainNode = new GainNode(context,{gain:0.5})
+  source.connect(gainNode).connect(context.destination)
+</script>

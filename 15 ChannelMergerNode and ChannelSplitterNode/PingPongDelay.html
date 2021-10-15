@@ -1,0 +1,29 @@
+<button id='ping'>Ping</button>
+<script>
+  ping.onclick = function() {
+    context.resume()
+    BurstGain.gain.value=1
+    BurstGain.gain.linearRampToValueAtTime(0,context.currentTime + 0.040)
+  }
+  var context= new AudioContext()
+  Burst=new OscillatorNode(context)
+  BurstGain=new GainNode(context,{gain:0})
+  Burst.start()
+  Burst.connect(BurstGain)
+  var merger = context.createChannelMerger(2)
+  var leftDelay = new DelayNode(context,{delayTime:0.5})
+  var rightDelay = new DelayNode(context,{delayTime:0.5})
+  var leftFeedback = new GainNode(context,{gain:0.8})
+  var rightFeedback = new GainNode(context,{gain:0.8})
+  BurstGain.connect(leftDelay)
+  // Connect the routing - left bounces to right, right bounces to left.
+  leftDelay.connect(leftFeedback)
+  leftFeedback.connect(rightDelay)
+  rightDelay.connect(rightFeedback)
+  rightFeedback.connect(leftDelay)
+  // Merge the two delay channels into stereo L/R
+  leftFeedback.connect(merger, 0, 0)
+  rightFeedback.connect(merger, 0, 1)
+  // Now connect 'merger' to the output destination.
+  merger.connect(context.destination)
+</script>

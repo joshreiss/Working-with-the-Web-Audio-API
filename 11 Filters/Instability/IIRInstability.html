@@ -1,0 +1,17 @@
+<input type='number' id='Coef' min=0 max=2 step='0.05' value=0>Coefficient
+<audio controls id='file' loop onplay='context.resume()'>
+<source src='flange love.mp3'>
+</audio>
+<script>
+  const context=new AudioContext()
+  let FF= [1,0], FB= [1,0]
+  let iirfilter=context.createIIRFilter(FF,FB)
+  let source = context.createMediaElementSource(file)
+  source.connect(iirfilter).connect(context.destination)
+  Coef.onchange = () =>{
+    FB[1] = -Coef.value
+    iirfilter=context.createIIRFilter(FF,FB)
+    source.disconnect()
+    source.connect(iirfilter).connect(context.destination)
+  }
+</script>
