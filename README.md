@@ -6,7 +6,8 @@ They demonstrate almost all audio nodes and other interfaces of the Web Audio AP
 
 Code examples are organised into 19 sections, corresponding to the 19 chapters in the book 'Working with the Web Audio API'.
 
-1. Introducing the Web Audio API - A simple Hello World, generating sound with the Web Audio API, and building up to show more functionality
+1. [Introducing the Web Audio API](01 Introducing the Web Audio API) - A simple Hello World, generating sound with the Web Audio API, and building up to show more functionality
+1. [Introducing the Web Audio API](/01 Introducing the Web Audio API) - A simple Hello World, generating sound with the Web Audio API, and building up to show more functionality1. [Introducing the Web Audio API](/01 Introducing the Web Audio API/) - A simple Hello World, generating sound with the Web Audio API, and building up to show more functionality
 2. Oscillators - demonstrating the OscillatorNode and PeriodicWave
 3. Audio Buffer sources - showing the AudioBufferSourceNode and BufferSource, with examples on creating buffered noise, pausing playback, playing audio backwards...
 4. The Constant Source Node - all about the ConstantSourceNode, with examples for grouping multitrack audio, DC offsets and another way to generate square waves
