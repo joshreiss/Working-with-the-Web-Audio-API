@@ -5,10 +5,8 @@ Various simple Web Audio API examples
 They demonstrate almost all audio nodes and other interfaces of the Web Audio API with short, working examples. The aim of these tutorials is to give very short but still fully functional examples for those trying to learn the API but not spend a long amount of time dissecting larger code samples, or understanding code snippets without their context. The examples are roughly ordered sequentially to cover the simplest Hello World to nodes that use more audio cor Web Audio programming concepts.
 
 Code examples are organised into 19 sections, corresponding to the 19 chapters in the book 'Working with the Web Audio API'.
-
-[blag](https://github.com/joshreiss/Working-with-the-Web-Audio-API/tree/master/01%20Introducing%20the%20Web%20Audio%20API)
-1. [Introducing the Web Audio API](01 Introducing the Web Audio API) - A simple Hello World, generating sound with the Web Audio API, and building up to show more functionality
-1. [Introducing the Web Audio API](/01 Introducing the Web Audio API) - A simple Hello World, generating sound with the Web Audio API, and building up to show more functionality1. [Introducing the Web Audio API](/01 Introducing the Web Audio API/) - A simple Hello World, generating sound with the Web Audio API, and building up to show more functionality
+ 
+1. [Introducing the Web Audio API](https://github.com/joshreiss/Working-with-the-Web-Audio-API/tree/master/01%20Introducing%20the%20Web%20Audio%20API) - A simple Hello World, generating sound with the Web Audio API, and building up to show more functionality
 2. Oscillators - demonstrating the OscillatorNode and PeriodicWave
 3. Audio Buffer sources - showing the AudioBufferSourceNode and BufferSource, with examples on creating buffered noise, pausing playback, playing audio backwards...
 4. The Constant Source Node - all about the ConstantSourceNode, with examples for grouping multitrack audio, DC offsets and another way to generate square waves
