@@ -1,0 +1,23 @@
+<button id='play' onclick='Start()'>Start()</button><br>
+<script>
+  let context = new AudioContext()
+  let source1 = context.createBufferSource()
+  let source2 = context.createBufferSource()
+  source1.connect(context.destination)
+  source2.connect(context.destination)
+  fetch('track1.mp3')
+  .then(response => response.arrayBuffer())
+  .then(buffer => context.decodeAudioData(buffer))
+  .then(data => source1.buffer = data)
+  fetch('track2.mp3')
+  .then(response => response.arrayBuffer())
+  .then(buffer => context.decodeAudioData(buffer))
+  .then(data => source2.buffer = data)
+  function Start() {
+    context.resume()
+    now = context.currentTime
+    source1.start(now)
+    source2.start(now+source1.buffer.duration)
+    context.resume()
+  }
+</script>
