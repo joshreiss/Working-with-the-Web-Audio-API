@@ -1,0 +1,42 @@
+<button id='play1' onclick='Start1()'>Start</button><br>
+<button id='play2' onclick='Start2()'>Start2</button><br>
+<script>
+  let context= new AudioContext()
+  let c= 343 // Speed of sound = 343 m/s
+  function Start1() {
+    context.resume()
+    let delay= new DelayNode(context,{delayTime:1,maxDelayTime:10})
+    let source = new OscillatorNode(context)
+    source.connect(delay).connect(context.destination)
+    let now = context.currentTime
+    delay.delayTime.setValueAtTime(1, now + 2)
+    delay.delayTime.linearRampToValueAtTime(0,now + 4)
+    delay.delayTime.linearRampToValueAtTime(1,now + 6)
+    delay.delayTime.setValueAtTime(1, now + 6)
+    source.start()
+  }
+  function Start2() {
+    context.resume()
+    let delay= new DelayNode(context,{delayTime:1,maxDelayTime:10})
+    let gain= new GainNode(context)
+    let source = new OscillatorNode(context)
+    source.connect(delay).connect(gain).connect(context.destination)
+    var Array = new Float32Array(201)
+    v = 20 // speed 20 meters per second in x direction
+    Duration = 4
+    x0 = -40
+    y = 20
+    for (i=0;i<201;i++) {
+      increment = Duration / 200
+      time = i * increment
+      x = x0 + time * v
+      distance = Math.sqrt(x*x + y*y)
+      Array[i] = distance / c
+      console.log(i,time,x)
+    }
+    let now = context.currentTime
+    delay.delayTime.setValueCurveAtTime(Array, now, Duration)
+    gain.gain.setValueAtTime(0,now+4)
+    source.start()
+  }
+</script>
