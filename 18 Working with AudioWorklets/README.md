@@ -9,4 +9,4 @@ All the main aspects of audio worklets are explained here. Source code examples 
 - Gain worklet: A simple gain node implemented as an audio worklet, to show how audio worklets handle audio parameters.
 - Smoothing Filter worklet: to show how an audio worklet stores internal variables, we implemented a smoothing filter. The audio worklet keeps track of the previous sample even though it reads in audio block by block.
  - First order filter options: first order high pass and low pass filters. They are implemented in a single audio worklet, with processorOptions specified to set the filter type.
- - First order filter options: first order high pass and low pass filters. They are implemented in a single audio worklet, with the message port used to set or change the filter type.
+ - First order filter messages: first order high pass and low pass filters. They are implemented in a single audio worklet, with the message port used to set or change the filter type.

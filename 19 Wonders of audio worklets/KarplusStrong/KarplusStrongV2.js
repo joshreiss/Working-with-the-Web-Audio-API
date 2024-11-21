@@ -1,7 +1,7 @@
 var context = new AudioContext
 context.audioWorklet.addModule('KSWorklets.js').then(() => {
   let Noise = new AudioWorkletNode(context,'noise-generator'),
-  NoiseGain = new GainNode(context,{gain:0}).
+  NoiseGain = new GainNode(context,{gain:0}),
   output = new GainNode(context),
   feedbackDelay= new AudioWorkletNode(context,'feedbackDelay-processor',
     {parameterData:{delayTime:5,gain:0.9}

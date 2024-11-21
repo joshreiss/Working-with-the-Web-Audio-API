@@ -1,0 +1,19 @@
+<h2>Working with audio worklets</h2>
+
+The Web Audio API provides an AudioWorkletNode, which lets developers create their own custom audio nodes for almost any audio processing or synthesis task.
+All the main aspects of audio worklets are explained here. Source code examples are given for;
+
+<ol>
+   <li><a href="1Noise worklet/basicNoise.html">Noise worklet</a>: a 'hello world' audio worklet generating a noise source
+   <li><a href="2async await format/asyncNoise.html">async await format</a>: the Noise worklet, but now implemented using async await instead of a promise then.
+   <li><a href="3Multiple Inputs/multipleInputs.html">Multiple inputs</a>: showing how one can have audio worklet nodes with multiple inputs, demonstrated with an audio worklet that finds the sample with maximum amplitude from all channels of all inputs .
+   <li><a href="4PanX/panX.html">PanX</a>: an audio worklet that pans audio between any number of loudspeakers. This demonstrates use of inputs, outputs and options for an audio worklet.
+   <li><a href="5Gain worklet/gain.html">Gain worklet</a>: A simple gain node implemented as an audio worklet, to show how audio worklets handle audio parameters.
+   <li><a href="6Smoothing Filter worklet/smoothing.html">Smoothing Filter worklet</a>: to show how an audio worklet stores internal variables, we implemented a smoothing filter. The audio worklet keeps track of the previous sample even though it reads in audio block by block.
+   <li><a href="7First order filter options/filterOptions.html">First order filter options</a>: first order high pass and low pass filters. They are implemented in a single audio worklet, with processorOptions specified to set the filter type.
+   <li><a href="8First order filter messaging/filterMessaging.html">First order filter messages</a>: first order high pass and low pass filters. They are implemented in a single audio worklet, with the message port used to set or change the filter type.
+</ol>
+
+Code examples correspond to examples from Chapter 19 in the book 'Working with the Web Audio API'.
+
+Feel free to contact me at joshua.reiss@qmul.ac.uk
