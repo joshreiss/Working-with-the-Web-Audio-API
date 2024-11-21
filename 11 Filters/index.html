@@ -1,0 +1,18 @@
+<h2>Filters</h2>
+
+These examples cover design, use and visualisation of filters in the Web Audio API. They focus on two audio nodes, the BiquadFilterNode and IIRFilterNode.
+
+- BiquadFilterNode: Visualises all the filter types for the BiquadFilterNode, as well as how changing filter parameters affects the filter's magnitude response.
+- IIRFilterNode: Visualise and listen to audio with a third order lowpass filter applied.
+- Instability: contains two examples showing how IIR filters can go unstable, and in unusual conditions, the biquad filter can become unstable.
+  - IIRInstability: a simple first order filter that goes unstable as the feedback term is increased (pole moves outside the unit circle)
+  - BiquadInstability: showing how changing filter parameters very, very rapidly can lead to instability in a BiquadFilterDesign
+  
+<ol>
+   <li><a href="stereoPanning.html">Listener</a>: a simple use of the StereoPannerNode, showing a minimal implementation.
+   <li><a href="Stereo Enhancer/stereoEnhancer.html">Stereo enhancer</a>: a stereo enhancer or stereo widener effect, which takes a stereo input stream and re-represents it as mid and side rather than left and right components. The relative strength of these components can be varied to narrow or widen the audio stream's use of the stereo field.
+</ol>
+
+Code examples correspond to examples from Chapter 11 in the book 'Working with the Web Audio API'.
+
+Feel free to contact me at joshua.reiss@qmul.ac.uk
