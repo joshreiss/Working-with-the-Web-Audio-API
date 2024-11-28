@@ -1,3 +1,4 @@
+<h2>OfflineAudioContext</h2>
 <div id='progress'></div>
 <script>
   duration=10
@@ -7,7 +8,7 @@
       var completed = 100*(offlineContext.currentTime/duration).toFixed(2)
       progress.innerHTML += completed + ' percent complete<br>'
       offlineContext.resume()
-      if (offlineContext.currentTime + 2<duration)
+      if (offlineContext.currentTime + 2 < duration)
         offlineContext.suspend(offlineContext.currentTime + 2)
     }
   }
