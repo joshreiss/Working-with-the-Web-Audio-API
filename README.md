@@ -2,6 +2,8 @@
 
 Various simple Web Audio API examples
 
+See https://joshreiss.github.io/Working-with-the-Web-Audio-API/ for live, interactive demos of all the code examples.
+
 They demonstrate almost all audio nodes and other interfaces of the Web Audio API with short, working examples. The aim of these tutorials is to give very short but still fully functional examples for those trying to learn the API but not spend a long amount of time dissecting larger code samples, or understanding code snippets without their context. The examples are roughly ordered sequentially to cover the simplest Hello World to nodes that use more audio cor Web Audio programming concepts.
 
 Code examples are organised into 19 sections, corresponding to the 19 chapters in the book 'Working with the Web Audio API'.
