@@ -6,7 +6,7 @@ See https://joshreiss.github.io/Working-with-the-Web-Audio-API/ for live, intera
 
 They demonstrate almost all audio nodes and other interfaces of the Web Audio API with short, working examples. The aim of these tutorials is to give very short but still fully functional examples for those trying to learn the API but not spend a long amount of time dissecting larger code samples, or understanding code snippets without their context. The examples are roughly ordered sequentially to cover the simplest Hello World to nodes that use more audio cor Web Audio programming concepts.
 
-Code examples are organised into 19 sections, corresponding to the 19 chapters in the book 'Working with the Web Audio API'.
+Code examples are organised into 19 sections, corresponding to the 19 chapters in the book 'Working with the Web Audio API'. Most sections also have accompanying word and powerpoint documents giving detailed explanations of the audio concepts and their implementations.
 
 1. [Introducing the Web Audio API](https://github.com/joshreiss/Working-with-the-Web-Audio-API/tree/master/01%20Introducing%20the%20Web%20Audio%20API) - A simple Hello World, generating sound with the Web Audio API, and building up to show more functionality
 2. [Oscillators](https://github.com/joshreiss/Working-with-the-Web-Audio-API/tree/master/02%20Oscillators) - demonstrating the OscillatorNode and PeriodicWave
